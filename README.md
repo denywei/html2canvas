@@ -8,6 +8,17 @@ html2canvas
 [![NPM Downloads](https://img.shields.io/npm/dm/html2canvas.svg)](https://www.npmjs.org/package/html2canvas)
 [![NPM Version](https://img.shields.io/npm/v/html2canvas.svg)](https://www.npmjs.org/package/html2canvas)
 
+
+>从这里做的分支https://github.com/niklasvh/html2canvas 
+>
+>与我项目相关的错误修复
+>
+>修复如下bugs:
+>>  iOS13 不能生成图片
+>>
+>>  图片跨域问题
+>>
+>>  在safari上的文字排版错误
 #### JavaScript HTML renderer ####
 
  The script allows you to take "screenshots" of webpages or parts of it, directly on the users browser. The screenshot is based on the DOM and as such may not be 100% accurate to the real representation as it does not make an actual screenshot, but builds the screenshot based on the information available on the page.

@@ -17,7 +17,13 @@ export class Bounds {
     }
 
     static fromDOMRectList(context: Context, domRectList: DOMRectList): Bounds {
-        const domRect = domRectList[0];
+        var domRect;
+        if(domRectList.length >1){
+            domRect = domRectList[1];
+        }else{
+            domRect = domRectList[0];
+        }
+
         return domRect
             ? new Bounds(
                   domRect.x + context.windowBounds.left,

@@ -109,7 +109,7 @@ export class DocumentCloner {
                 return Promise.reject(`Error finding the ${this.referenceElement.nodeName} in the cloned document`);
             }
 
-            if (documentClone.fonts && documentClone.fonts.ready) {
+            if (documentClone.fonts && documentClone.fonts.status === 'loading' && documentClone.fonts.ready) {
                 await documentClone.fonts.ready;
             }
 
@@ -151,12 +151,21 @@ export class DocumentCloner {
         const clone = node.cloneNode(false) as T;
         if (isImageElement(clone)) {
             if (isImageElement(node) && node.currentSrc && node.currentSrc !== node.src) {
-                clone.src = node.currentSrc;
+                clone.src = node.currentSrc ;
                 clone.srcset = '';
             }
 
             if (clone.loading === 'lazy') {
                 clone.loading = 'eager';
+            }
+            if(clone.src.indexOf('?') > -1){
+                if(clone.src.charAt(clone.src.length - 1) === '&'){
+                    clone.src += 'timestamp='+Date.now();
+                }else{
+                    clone.src += '&timestamp='+Date.now();
+                }
+            }else{
+                clone.src += '?timestamp='+Date.now();
             }
         }
 

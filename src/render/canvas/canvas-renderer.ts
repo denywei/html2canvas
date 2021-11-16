@@ -298,13 +298,16 @@ export class CanvasRenderer extends Renderer {
         const curves = paint.curves;
         const styles = container.styles;
         for (const child of container.textNodes) {
+
             await this.renderTextNode(child, styles);
         }
 
         if (container instanceof ImageElementContainer) {
             try {
-                const image = await this.context.cache.match(container.src);
-                this.renderReplacedElement(container, curves, image);
+                await this.context.cache.match(container.src).then((src)=>{
+                    this.renderReplacedElement(container, curves, src);
+                });
+        
             } catch (e) {
                 this.context.logger.error(`Error loading image ${container.src}`);
             }
@@ -395,7 +398,7 @@ export class CanvasRenderer extends Renderer {
             this.ctx.font = fontFamily;
             this.ctx.fillStyle = asString(styles.color);
 
-            this.ctx.textBaseline = 'alphabetic';
+            this.ctx.textBaseline = 'middle';
             this.ctx.textAlign = canvasTextAlign(container.styles.textAlign);
 
             const bounds = contentBox(container);
@@ -428,7 +431,7 @@ export class CanvasRenderer extends Renderer {
                 baseline
             );
             this.ctx.restore();
-            this.ctx.textBaseline = 'alphabetic';
+            this.ctx.textBaseline = 'bottom';
             this.ctx.textAlign = 'left';
         }
 

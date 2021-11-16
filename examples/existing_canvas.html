@@ -18,13 +18,23 @@
     </style>
 </head>
 <body>
-<div><h1>HTML content to render:</h1>
-    <div id="content">Render the content in this element <strong>only</strong> onto the existing canvas element</div>
+<div style="width: 600px;"><h1>HTML content to render:</h1>
+    <div id="content">Render the content in this element <strong>only</strong> onto the existing canvas element
+        <!-- <img style="width:500px;display:block;" src="https://bbs-1252145652.cos.ap-guangzhou.myqcloud.com/public/attachments/2021/11/10/5WDxbCNeiyiassJktaB71pqhaU63ykZaOIsgdwMv.jpeg?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKID50kETVtvoRoxwfIRxtd9PYTzJ5brnaP0%26q-sign-time%3D1636688376%3B1636774836%26q-key-time%3D1636688376%3B1636774836%26q-header-list%3Dhost%26q-url-param-list%3D%26q-signature%3Db45d83e039ef5780717c54e00b6a93fcd5b2f4ad&" /> -->
+        <img style="width: 500px;display: block;" src="https://gy.dev.28tui.com.cn/storage/c72bb20eeb1d183e544b649063b30177.png?1626420177"/>
+        <p style="display: grid;">
+            2020年新冠疫情让大部分实体行业遭受打击，而直播带货却逆势上扬，已经成为很多行业复工复产，
+            弥补损失的重要手段。数据显示，2020年中国直播带货市场规模达到9610亿元，同比大幅增长121.5%。
+            随着直播行业“人货场”的持续扩大，直播将逐步渗透至电商的各个领域，预计2021年直播整体规模将继续保持高速增长，
+            规模将接近12012亿元。    
+        </p>
+    </div>
 </div>
 <h1>Existing canvas:</h1>
 <canvas width="500" height="200"></canvas>
 <script type="text/javascript" src="../dist/html2canvas.js"></script>
 <button>Run html2canvas</button>
+<img id="myimg" src=""></img>
 <script type="text/javascript">
     var canvas = document.querySelector("canvas");
     var ctx = canvas.getContext("2d");
@@ -42,9 +52,11 @@
     ctx.stroke();
 
     document.querySelector("button").addEventListener("click", function() {
-        html2canvas(document.querySelector("#content"), {canvas: canvas, scale: 1}).then(function(canvas) {
-            console.log('Drew on the existing canvas');
+        html2canvas(document.querySelector("#content"), {scale: 1,logging:true,debugger:true,allowTaint:false,useCORS:true}).then(function(canvas) {
+            console.log('Drew on the existing canvas',canvas);
+            document.querySelector("#myimg").src=canvas.toDataURL("image/png");
         });
+        
     }, false);
 
 </script>

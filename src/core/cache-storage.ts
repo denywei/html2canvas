@@ -36,15 +36,17 @@ export interface ResourceOptions {
 export class Cache {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private readonly _cache: {[key: string]: Promise<any>} = {};
-
+    private readonly _pre:string = '7777';
     constructor(private readonly context: Context, private readonly _options: ResourceOptions) {}
 
     addImage(src: string): Promise<void> {
         const result = Promise.resolve();
+
+        src += this._pre;
         if (this.has(src)) {
             return result;
         }
-
+        
         if (isBlobImage(src) || isRenderable(src)) {
             (this._cache[src] = this.loadImage(src)).catch(() => {
                 // prevent unhandled rejection
@@ -57,7 +59,10 @@ export class Cache {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     match(src: string): Promise<any> {
-        return this._cache[src];
+        return new Promise((resolve, reject) => {
+            resolve(this._cache[src+this._pre]);
+            reject(this._cache[src+this._pre]);
+        });
     }
 
     private async loadImage(key: string) {
